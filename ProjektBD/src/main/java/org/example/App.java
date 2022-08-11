@@ -32,7 +32,11 @@ public class App extends Application
         {
             //DatabaseConnection databaseConnection = new DatabaseConnection();
             //databaseConnection.createBase();
+            //databaseConnection.bookBase();
+
             databaseConnection = new DatabaseConnection();
+
+            //databaseConnection.bookBase();
         }
         catch (SQLException ex)
         {
@@ -42,6 +46,7 @@ public class App extends Application
         {
             ex.printStackTrace();
         }
+
         launch();
     }
 }

@@ -1,6 +1,11 @@
 package org.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -20,6 +25,9 @@ import static org.example.App.databaseConnection;
 public class RegisterController
 {
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     @FXML
     private TextField nameField, lastnameField, ageField, addressField, emailField, passwordField;
 
@@ -27,16 +35,18 @@ public class RegisterController
     private Button cancelButton, submitButton;
 
     @FXML
-    public void cancel()
+    public void cancel(ActionEvent event) throws IOException
     {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        root = FXMLLoader.load(getClass().getResource("first.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    public void submit()
+    public void submit(ActionEvent event) throws IOException
     {
-        //LEPSZA WALIDACJA - UWZGLEDNIC WSZYSTKIE MOZLIWOSCI !
         if(nameField.getText().trim().isEmpty() || lastnameField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -45,11 +55,11 @@ public class RegisterController
         }
         else
         {
-            RegisterData registerData;
+            //RegisterData registerData;
             String name = nameField.getText();
             String lastname = lastnameField.getText();
             String address;
-            String email = emailField.getText(); //EMAIL NIE MOZE SIE POWTORZYC W REJESTRACJI - POTRZEBNA WALIDACJA!
+            String email = emailField.getText();
             String password = passwordField.getText();
             int age;
             if(!ageField.getText().trim().isEmpty())
@@ -76,14 +86,20 @@ public class RegisterController
 
                 databaseConnection.weryfikacja(email,password);
 
-                registerData = new RegisterData(name,lastname,age,address,email,password);
+                //registerData = new RegisterData(name,lastname,age,address,email,password);
 
                 databaseConnection.add(name,lastname,age,address,email,password);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Zarejestrowano pomyslnie!");
                 alert.show();
-                Stage stage = (Stage) submitButton.getScene().getWindow();
-                stage.close();
+
+                //Przelaczanie na scene glowna
+                root = FXMLLoader.load(getClass().getResource("first.fxml"));
+                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+
             }
             catch (SQLException ex)
             {

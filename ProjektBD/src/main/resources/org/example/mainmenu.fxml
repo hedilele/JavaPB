@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -8,23 +9,40 @@
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints />
   </rowConstraints>
    <children>
-      <Button fx:id="borrowButton" maxWidth="200.0" mnemonicParsing="false" onAction="#borrow" prefHeight="100.0" text="Wypożycz">
+      <Button fx:id="borrowButton" maxWidth="200.0" mnemonicParsing="false" onAction="#viewbook" prefHeight="100.0" text="Ksiazki" textFill="#1744b5">
          <font>
             <Font name="System Bold" size="22.0" />
-         </font></Button>
-      <Button fx:id="returnButton" maxWidth="200.0" mnemonicParsing="false" onAction="#returno" prefHeight="100.0" text="Zwróć" GridPane.columnIndex="1">
+         </font>
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin></Button>
+      <Button fx:id="logoutButton" maxWidth="200.0" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" text="Wyloguj się" textFill="#c62525" GridPane.columnIndex="1">
           <font>
               <Font name="System Bold" size="22.0" />
-          </font></Button>
-      <Button fx:id="logoutButton" maxWidth="200.0" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" text="Wyloguj się" GridPane.columnIndex="2">
-          <font>
-              <Font name="System Bold" size="22.0" />
-          </font></Button>
+          </font>
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin></Button>
+      <Button fx:id="addButton" maxWidth="200.0" mnemonicParsing="false" onAction="#addbook" prefHeight="100.0" prefWidth="0.0" text="Dodaj ksiazke" textFill="#1744b5" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin></Button>
+      <Button fx:id="deleteButton" maxWidth="200.0" mnemonicParsing="false" onAction="#deletebook" prefHeight="100.0" text="Usun ksiazke" textFill="#1744b5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin></Button>
    </children>
 </GridPane>

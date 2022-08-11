@@ -1,32 +1,80 @@
 package org.example;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MenuController
 {
+    private Parent root;
+    private Scene scene;
+    private Stage stage;
+
     @FXML
-    private Button returnButton, logoutButton, borrowButton;
+    private Button returnButton, logoutButton, borrowButton, addButton, deleteBook;
 
     //Wylogowywanie sie
     @FXML
-    public void logout()
+    public void logout(ActionEvent event) throws IOException
     {
-
+        root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     //Wypozyczanie ksiazki
     @FXML
-    public void borrow()
+    public void viewbook() throws IOException
     {
-
+        /*
+        root = FXMLLoader.load(getClass().getResource("showbook.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+         */
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showbook.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage2 = new Stage();
+        stage2.setTitle("Ksiazki");
+        stage2.setScene(scene);
+        stage2.show();
     }
 
     //Oddawanie ksiazki
-    @FXML
-    public void returno()
-    {
 
+    //Dodawanie ksiazki do bazy
+    @FXML
+    public void addbook(ActionEvent event) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getResource("addbook.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Dodawanie ksiazki");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    //Usuwanie ksiazki z bazy
+    @FXML
+    public void deletebook(ActionEvent event) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getResource("deletebook.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Usuwanie ksiazki");
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -1,7 +1,9 @@
 package org.example;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,19 +20,24 @@ import java.sql.SQLException;
 public class LoginController
 {
     private Stage stage;
+    private Scene scene;
+    private Parent root;
     @FXML
     private Button loginButton,cancelButton;
 
     @FXML
     private TextField passwordFld, emailFld;
 
-    public void cancel()
+    public void cancel(ActionEvent event) throws IOException
     {
-        stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        root = FXMLLoader.load(getClass().getResource("first.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void login() throws SQLException, ClassNotFoundException, IOException
+    public void login(ActionEvent event) throws SQLException, ClassNotFoundException, IOException
     {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         String email;
@@ -67,14 +74,11 @@ public class LoginController
                 alert.setContentText("Pomyslnie zalogowano!");
                 alert.show();
 
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainmenu.fxml"));
-                Parent root = fxmlLoader.load();
-                Scene scene = new Scene(root);
-                Stage stage2 = new Stage();
-                stage2.setTitle("Glowne Menu");
-                stage2.setScene(scene);
-                stage2.show();
-                stage.close();
+                root = FXMLLoader.load(getClass().getResource("mainmenu.fxml"));
+                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             }
             //Walidacja kiedy email jest dobry (istnieje), a haslo do podanego istniejacego maila jest zle!
             else

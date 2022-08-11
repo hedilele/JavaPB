@@ -15,21 +15,21 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="300.0" text="Zaloguj się">
+        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="300.0" text="Zaloguj się" textFill="#44c364">
             <GridPane.margin>
                 <Insets left="150.0" />
             </GridPane.margin>
             <font>
                 <Font name="System Bold" size="22.0" />
             </font></Button>
-        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="300.0" text="Zarejestruj" GridPane.rowIndex="1">
+        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="300.0" text="Zarejestruj" textFill="#7c41c9" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets left="150.0" />
             </GridPane.margin>
             <font>
                 <Font name="System Bold" size="22.0" />
             </font></Button>
-      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="50.0" prefWidth="300.0" text="Wyjdź" GridPane.rowIndex="2">
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#quit" prefHeight="50.0" prefWidth="300.0" text="Wyjdź" textFill="#d04747" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="150.0" />
          </GridPane.margin>
