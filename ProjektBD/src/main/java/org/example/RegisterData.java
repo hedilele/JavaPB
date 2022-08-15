@@ -25,6 +25,9 @@ public class RegisterData
         this.password = password;
     }
 
+    public RegisterData()
+    {
+    }
 
     public String getName()
     {

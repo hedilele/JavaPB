@@ -50,16 +50,16 @@ public class AddBookController
         }
         else
         {
-            BookData bookData;
-            String author = authorField.getText();
-            String title = titleField.getText();
-            String genre = genreField.getText();
-            int number = Integer.parseInt(numberField.getText());
+            BookData bookData = new BookData();
+
+            bookData.setAuthor(authorField.getText());
+            bookData.setTitle(titleField.getText());
+            bookData.setGenre(genreField.getText());
+            bookData.setNumber(Integer.parseInt(numberField.getText()));
+
             try
             {
-                bookData = new BookData(author,title,genre,number);
-
-                databaseConnection.add_book(author,title,genre,number);
+                databaseConnection.add_book(bookData.getAuthor(),bookData.getTitle(),bookData.getGenre(),bookData.getNumber());
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Dodano pomyslnie!");
                 alert.show();

@@ -55,40 +55,38 @@ public class RegisterController
         }
         else
         {
-            //RegisterData registerData;
-            String name = nameField.getText();
-            String lastname = lastnameField.getText();
-            String address;
-            String email = emailField.getText();
-            String password = passwordField.getText();
-            int age;
+            RegisterData registerData = new RegisterData();
+
+            registerData.setName(nameField.getText());
+            registerData.setLastname(lastnameField.getText());
+            registerData.setEmail(emailField.getText());
+            registerData.setPassword(passwordField.getText());
+
             if(!ageField.getText().trim().isEmpty())
             {
-                age = Integer.parseInt(ageField.getText());
+                registerData.setAge(Integer.parseInt(ageField.getText()));
             }
             else
             {
-                age = 0;
+                registerData.setAge(0);
             }
 
             if(!addressField.getText().trim().isEmpty())
             {
-                address = addressField.getText();
+                registerData.setAddress(addressField.getText());
             }
             else
             {
-                address = "Nie podano";
+                registerData.setAddress("Nie podano");
             }
 
 
             try
             {
 
-                databaseConnection.weryfikacja(email,password);
+                databaseConnection.weryfikacja(registerData.getEmail(),registerData.getPassword());
 
-                //registerData = new RegisterData(name,lastname,age,address,email,password);
-
-                databaseConnection.add(name,lastname,age,address,email,password);
+                databaseConnection.add(registerData.getName(),registerData.getLastname(),registerData.getAge(),registerData.getAddress(),registerData.getEmail(),registerData.getPassword());
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Zarejestrowano pomyslnie!");
                 alert.show();

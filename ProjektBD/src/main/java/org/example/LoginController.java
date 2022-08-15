@@ -40,8 +40,6 @@ public class LoginController
     public void login(ActionEvent event) throws SQLException, ClassNotFoundException, IOException
     {
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        String email;
-        String password;
         if(emailFld.getText().trim().isEmpty() && passwordFld.getText().trim().isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -62,11 +60,13 @@ public class LoginController
         }
         else
         {
+            RegisterData registerData = new RegisterData();
             boolean wynik = false;
-            email = emailFld.getText();
-            password = passwordFld.getText();
 
-            wynik = databaseConnection.weryfikacja(email,password);
+            registerData.setEmail(emailFld.getText());
+            registerData.setPassword(passwordFld.getText());
+
+            wynik = databaseConnection.weryfikacja(registerData.getEmail(),registerData.getPassword());
 
             if(wynik == true)
             {

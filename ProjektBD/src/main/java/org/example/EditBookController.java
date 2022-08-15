@@ -17,9 +17,6 @@ import java.sql.SQLException;
 import static org.example.App.databaseConnection;
 public class EditBookController
 {
-    //private Parent root;
-    //private Stage stage;
-    //private Scene scene;
     @FXML
     private TextField authorField, titleField, genreField, bidField;
 
@@ -45,14 +42,16 @@ public class EditBookController
         }
         else
         {
-            int bid = Integer.parseInt(bidField.getText());
-            String author = authorField.getText();
-            String title = titleField.getText();
-            String genre = genreField.getText();
+            BookData bookData = new BookData();
+
+            bookData.setBid(Integer.parseInt(bidField.getText()));
+            bookData.setAuthor(authorField.getText());
+            bookData.setTitle(titleField.getText());
+            bookData.setGenre(genreField.getText());
 
             try
             {
-                databaseConnection.edit_book(bid,author,title,genre);
+                databaseConnection.edit_book(bookData.getBid(),bookData.getAuthor(),bookData.getTitle(),bookData.getGenre());
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Edytowano pomyslnie!");
                 alert.show();

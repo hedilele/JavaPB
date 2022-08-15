@@ -34,6 +34,10 @@ public class BookData
         this.genre = genre;
     }
 
+    public BookData()
+    {
+    }
+
     public String getAuthor()
     {
         return author;
