@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -22,12 +21,11 @@ public class AddBookController
     private Parent root;
     private Scene scene;
 
-    private ResultSet resultSet = null;
-    @FXML
-    private Button cancelButton, submitButton;
+    private final ResultSet resultSet = null;
+
 
     @FXML
-    private TextField authorField, titleField, genreField, numberField;
+    private TextField authorField, titleField, genreField;
 
     @FXML
     public void cancel(ActionEvent event) throws IOException
@@ -42,7 +40,7 @@ public class AddBookController
     @FXML
     public void submit(ActionEvent event) throws IOException
     {
-        if(authorField.getText().trim().isEmpty() || titleField.getText().trim().isEmpty() || genreField.getText().trim().isEmpty() || numberField.getText().trim().isEmpty())
+        if(authorField.getText().trim().isEmpty() || titleField.getText().trim().isEmpty() || genreField.getText().trim().isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Proszę wypelnić pola zaznaczone *!");
@@ -55,11 +53,11 @@ public class AddBookController
             bookData.setAuthor(authorField.getText());
             bookData.setTitle(titleField.getText());
             bookData.setGenre(genreField.getText());
-            bookData.setNumber(Integer.parseInt(numberField.getText()));
+            System.out.println();
 
             try
             {
-                databaseConnection.add_book(bookData.getAuthor(),bookData.getTitle(),bookData.getGenre(),bookData.getNumber());
+                databaseConnection.add_book(bookData.getAuthor(),bookData.getTitle(),bookData.getGenre(),Pamiec.pamiec.getEmail());
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Dodano pomyslnie!");
                 alert.show();
@@ -71,11 +69,7 @@ public class AddBookController
                 stage.show();
 
             }
-            catch (SQLException ex)
-            {
-                ex.printStackTrace();
-            }
-            catch (ClassNotFoundException ex)
+            catch (SQLException | ClassNotFoundException ex)
             {
                 ex.printStackTrace();
             }

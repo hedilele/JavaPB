@@ -11,8 +11,8 @@
             <TableColumn fx:id="bidCol" prefWidth="50.0" text="BID" />
           <TableColumn fx:id="authorCol" prefWidth="250.0" text="Autor" />
           <TableColumn fx:id="titleCol" prefWidth="250.0" text="Tytul" />
-            <TableColumn fx:id="genreCol" prefWidth="250.0" text="Gatunek" />
-            <TableColumn fx:id="numberCol" prefWidth="100.0" text="Ilosc" />
+            <TableColumn fx:id="genreCol" prefWidth="200.0" text="Gatunek" />
+            <TableColumn fx:id="emailCol" prefWidth="150.0" text="Dodajacy" />
         </columns>
       </TableView>
       <Button fx:id="quitButton" layoutX="265.0" layoutY="370.0" mnemonicParsing="false" onAction="#quit" text="Wyjdz" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="570.0">

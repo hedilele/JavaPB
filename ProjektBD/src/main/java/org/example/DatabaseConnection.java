@@ -2,10 +2,7 @@ package org.example;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 import static org.example.App.databaseConnection;
@@ -13,7 +10,7 @@ import static org.example.App.databaseConnection;
 public class DatabaseConnection
 {
     private Statement statement = null;
-    private Connection connection = null;
+    private final Connection connection;
 
     //ObservableList<BookData> observableList = FXCollections.observableArrayList();
     ObservableList<BookData> observableList = FXCollections.observableArrayList();
@@ -36,7 +33,7 @@ public class DatabaseConnection
     }
 
     //Dodawanie do bazy ksiazki
-    public void add_book(String author, String title, String genre, int number) throws ClassNotFoundException, SQLException
+    public void add_book(String author, String title, String genre, String email) throws ClassNotFoundException, SQLException
     {
         //bid = resultSet.getInt(1);
         //statement = connection.createStatement();
@@ -45,15 +42,13 @@ public class DatabaseConnection
         //"+bid+",
         //String sql = "INSERT INTO books VALUES ('"+author+"' , '"+title+"', '"+genre+"', "+number+");";
 
-        String sql = "INSERT INTO books(author,title,genre,number) values(?,?,?,?);";
+        String sql = "INSERT INTO books(author,title,genre,email) values(?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(sql);
-        String cos;
         ps.setString(1, author);
         ps.setString(2, title);
         ps.setString(3, genre);
-        ps.setInt(4, number);
-        //statement.executeUpdate(sql);
-        //statement.close();
+        ps.setString(4,email);
+
         ps.executeUpdate();
         ps.close();
     }
@@ -109,7 +104,8 @@ public class DatabaseConnection
                 "AUTHOR TEXT NOT NULL, " +
                 "TITLE TEXT NOT NULL, " +
                 "GENRE TEXT NOT NULL, " +
-                "NUMBER INT NOT NULL)";
+                "EMAIL TEXT NOT NULL, " +
+                "FOREIGN KEY (EMAIL) REFERENCES Register(email));"; //Dodanie klucza obcego z tabeli rejestracji
         statement.executeUpdate(sql);
         statement.close();
         connection.close();
@@ -134,10 +130,10 @@ public class DatabaseConnection
 
 
     //Sprawdzanie czy podany email i haslo znajduja się w bazie - funckaj pomocnicza
-    private ResultSet sprawdz(Connection connection, String email, String password) throws SQLException, ClassNotFoundException
+    private ResultSet sprawdz(Connection connection, String email, String password) throws SQLException
     {
         String sql = "SELECT COUNT(*) FROM Register WHERE email = ? AND password = ?;";
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, email);
@@ -179,7 +175,7 @@ public class DatabaseConnection
             while(resultSet.next())
             {
                 observableList.add(new BookData(resultSet.getInt(1),resultSet.getString("author"), resultSet.getString("title"),
-                        resultSet.getString("genre"), resultSet.getInt("number")));
+                        resultSet.getString("genre"), resultSet.getString("email")));
 
             }
         }

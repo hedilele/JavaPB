@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -30,19 +29,16 @@ public class App extends Application
     {
         try
         {
-            //DatabaseConnection databaseConnection = new DatabaseConnection();
-            //databaseConnection.createBase();
-            //databaseConnection.bookBase();
-
+            /*
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.createBase();
+            databaseConnection.bookBase();
+             */
             databaseConnection = new DatabaseConnection();
 
             //databaseConnection.bookBase();
         }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             ex.printStackTrace();
         }

@@ -8,21 +8,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.Duration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.example.App.databaseConnection;
 
@@ -34,9 +26,6 @@ public class RegisterController
     private Parent root;
     @FXML
     private TextField nameField, lastnameField, ageField, addressField, emailField, passwordField;
-
-    @FXML
-    private Button cancelButton, submitButton;
 
     @FXML
     private Label message;
@@ -92,12 +81,11 @@ public class RegisterController
 
             try
             {
-
                 databaseConnection.weryfikacja(registerData.getEmail(),registerData.getPassword());
 
-                if(emailPassVal.isValidEmail(registerData.getEmail()))
+                if(EmailPassVal.isValidEmail(registerData.getEmail()))
                 {
-                    if(emailPassVal.isValidPass(registerData.getPassword()))
+                    if(EmailPassVal.isValidPass(registerData.getPassword()))
                     {
                         databaseConnection.add(registerData.getName(),registerData.getLastname(),registerData.getAge(),registerData.getAddress(),registerData.getEmail(),registerData.getPassword());
 
@@ -111,7 +99,7 @@ public class RegisterController
                                 Thread.sleep(2000);
                                 if(alert.isShowing())
                                 {
-                                    Platform.runLater(() -> alert.close());
+                                    Platform.runLater(alert::close);
                                 }
                             }
                             catch (Exception ex)
@@ -152,7 +140,6 @@ public class RegisterController
             {
                 ex.printStackTrace();
             }
-            //Naprawic sytuacje jesli email jest juz  w bazie, ale jest poprawny
         }
     }
 }

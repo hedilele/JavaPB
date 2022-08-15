@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,8 +19,6 @@ public class DeleteBookController
     private Stage stage;
     private Scene scene;
     private Parent root;
-    @FXML
-    private Button cancelButton, deleteButton;
 
     @FXML
     private TextField bidField;
@@ -47,11 +44,11 @@ public class DeleteBookController
         }
         else
         {
-            boolean wynik = false;
+            boolean wynik;
             int bid = Integer.parseInt(bidField.getText());
             wynik = databaseConnection.weryfikacja_bid(bid);
 
-            if(wynik == true)
+            if(wynik)
             {
                 databaseConnection.delete_book(bid);
 

@@ -6,26 +6,26 @@ public class BookData
     private String author;
     private String title;
     private String genre;
-    private int number;
+    private String email;
 
 
-    public BookData(int bid,String author, String title, String genre, int number)
+    //Usuniecie number i dodanie maila
+    public BookData(int bid,String author, String title, String genre, String email)
     {
         this.bid = bid;
         this.author = author;
         this.title = title;
         this.genre = genre;
-        this.number = number;
+        this.email = email;
     }
 
-    public BookData(String author, String title, String genre, int number)
+    public BookData(String author, String title, String genre, String addedEmail)
     {
         this.author = author;
         this.title = title;
         this.genre = genre;
-        this.number = number;
+        this.email = email;
     }
-
     public BookData(int bid, String author, String title, String genre)
     {
         this.bid = bid;
@@ -33,7 +33,6 @@ public class BookData
         this.title = title;
         this.genre = genre;
     }
-
     public BookData()
     {
     }
@@ -68,17 +67,6 @@ public class BookData
         this.genre = genre;
     }
 
-    public int getNumber()
-    {
-        return number;
-    }
-
-    public void setNumber(int number)
-    {
-        this.number = number;
-    }
-
-
     public int getBid()
     {
         return bid;
@@ -89,7 +77,15 @@ public class BookData
         this.bid = bid;
     }
 
+    public String getEmail()
+    {
+        return email;
+    }
 
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
 
     @Override
     public String toString()
@@ -98,7 +94,6 @@ public class BookData
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", genre='" + genre + '\'' +
-                ", number=" + number +
                 '}';
     }
 }

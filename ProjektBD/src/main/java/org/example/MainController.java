@@ -17,7 +17,7 @@ public class MainController
     private Scene scene;
     private Parent root;
     @FXML
-    private Button loginButton, registerButton, cancelButton;
+    private Button cancelButton;
 
     @FXML
     private void login(ActionEvent event) throws IOException
@@ -40,7 +40,7 @@ public class MainController
     }
 
     @FXML
-    public void quit() throws IOException
+    public void quit()
     {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

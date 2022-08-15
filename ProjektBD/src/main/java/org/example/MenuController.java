@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,13 +17,12 @@ public class MenuController
     private Scene scene;
     private Stage stage;
 
-    @FXML
-    private Button returnButton, logoutButton, borrowButton, addButton, deleteBook;
-
     //Wylogowywanie sie
     @FXML
     public void logout(ActionEvent event) throws IOException
     {
+        Pamiec.pamiec = null; //Czyszczenie pamieci
+
         root = FXMLLoader.load(getClass().getResource("login.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -36,13 +34,6 @@ public class MenuController
     @FXML
     public void viewbook() throws IOException
     {
-        /*
-        root = FXMLLoader.load(getClass().getResource("showbook.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-         */
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("showbook.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -51,8 +42,6 @@ public class MenuController
         stage2.setScene(scene);
         stage2.show();
     }
-
-    //Oddawanie ksiazki
 
     //Dodawanie ksiazki do bazy
     @FXML

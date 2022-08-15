@@ -1,14 +1,10 @@
 package org.example;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,20 +16,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static org.example.App.databaseConnection;
 public class BorrowController implements Initializable
 {
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
     @FXML
     private TableView<BookData> table;
     @FXML
@@ -45,9 +32,9 @@ public class BorrowController implements Initializable
     @FXML
     private TableColumn<BookData, String> genreCol;
     @FXML
-    private TableColumn<BookData, Integer> numberCol;
+    private TableColumn<BookData, Integer> emailCol;
     @FXML
-    private Button quitButton, editButton;
+    private Button quitButton;
 
     @FXML
     private TextField keywordField;
@@ -64,7 +51,7 @@ public class BorrowController implements Initializable
             authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
             titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
             genreCol.setCellValueFactory(new PropertyValueFactory<>("genre"));
-            numberCol.setCellValueFactory(new PropertyValueFactory<>("number"));
+            emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
 
 
             table.setItems(databaseConnection.observableList);
@@ -72,34 +59,35 @@ public class BorrowController implements Initializable
             //Dodawanie mozliwosci wyszukiwania slow kluczowych w bazie
             FilteredList<BookData> filteredList = new FilteredList<>(databaseConnection.observableList, b -> true);
 
-            keywordField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredList.setPredicate(bookData -> {
-                    if(newValue.isEmpty() || newValue.isBlank() || newValue == null)
-                    {
-                        return true;
-                    }
+            keywordField.textProperty().addListener((observable, oldValue, newValue) -> filteredList.setPredicate(bookData -> {
+                if(newValue.isEmpty() || newValue.isBlank() || newValue == null)
+                {
+                    return true;
+                }
 
-                    String search = newValue.toLowerCase();
+                String search = newValue.toLowerCase();
 
-                    if(bookData.getAuthor().toLowerCase().indexOf(search) > -1)
-                    {
-                        return true; //Zwracamy true jesli nasza wyszukiwana fraza znajduje sie na liscie
-                    }
-                    else if(bookData.getTitle().toLowerCase().indexOf(search) > -1)
-                    {
-                        return true;
-                    }
-                    else if(bookData.getGenre().toLowerCase().indexOf(search) > -1)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false; //Brak wyszukiwanego wzorca zwraca false
-                    }
-                });
-
-            });
+                if(bookData.getAuthor().toLowerCase().indexOf(search) > -1)
+                {
+                    return true; //Zwracamy true jesli nasza wyszukiwana fraza znajduje sie na liscie
+                }
+                else if(bookData.getTitle().toLowerCase().indexOf(search) > -1)
+                {
+                    return true;
+                }
+                else if(bookData.getGenre().toLowerCase().indexOf(search) > -1)
+                {
+                    return true;
+                }
+                else if(bookData.getEmail().toLowerCase().indexOf(search) > -1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false; //Brak wyszukiwanego wzorca zwraca false
+                }
+            }));
 
             //Sortowanie naszej listy przy uzyciu listy posortowanej
             SortedList<BookData> sortedList = new SortedList<>(filteredList);
@@ -111,7 +99,7 @@ public class BorrowController implements Initializable
 
     //Wychodzenie
     @FXML
-    public void quit() throws IOException
+    public void quit()
     {
         Stage stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
