@@ -36,7 +36,7 @@ public class EditBookController
     {
         if(bidField.getText().trim().isEmpty() || authorField.getText().trim().isEmpty() || titleField.getText().trim().isEmpty() || genreField.getText().trim().isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Proszę wypelnić pola zaznaczone *!");
             alert.show();
         }

@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,19 +43,19 @@ public class LoginController
         DatabaseConnection databaseConnection = new DatabaseConnection();
         if(emailFld.getText().trim().isEmpty() && passwordFld.getText().trim().isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Proszę wypelnić wszystkie pola!");
             alert.show();
         }
         else if(emailFld.getText().trim().isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Proszę podac email!");
             alert.show();
         }
         else if(passwordFld.getText().trim().isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Proszę podac haslo!");
             alert.show();
         }
@@ -72,7 +73,7 @@ public class LoginController
             {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Pomyslnie zalogowano!");
-                alert.show();
+                alert.close();
 
                 root = FXMLLoader.load(getClass().getResource("mainmenu.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -84,7 +85,7 @@ public class LoginController
             else
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Podany email nie istnieje!");
+                alert.setContentText("Podane dane sa zle!");
                 alert.show();
             }
         }

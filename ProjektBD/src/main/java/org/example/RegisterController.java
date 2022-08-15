@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.postgresql.util.PSQLException;
 
@@ -17,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +37,9 @@ public class RegisterController
 
     @FXML
     private Button cancelButton, submitButton;
+
+    @FXML
+    private Label message;
 
     @FXML
     public void cancel(ActionEvent event) throws IOException
@@ -56,11 +63,13 @@ public class RegisterController
         else
         {
             RegisterData registerData = new RegisterData();
+            EmailPassVal emailPassVal = new EmailPassVal();
 
             registerData.setName(nameField.getText());
             registerData.setLastname(lastnameField.getText());
             registerData.setEmail(emailField.getText());
             registerData.setPassword(passwordField.getText());
+
 
             if(!ageField.getText().trim().isEmpty())
             {
@@ -86,18 +95,52 @@ public class RegisterController
 
                 databaseConnection.weryfikacja(registerData.getEmail(),registerData.getPassword());
 
-                databaseConnection.add(registerData.getName(),registerData.getLastname(),registerData.getAge(),registerData.getAddress(),registerData.getEmail(),registerData.getPassword());
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Zarejestrowano pomyslnie!");
-                alert.show();
+                if(emailPassVal.isValidEmail(registerData.getEmail()))
+                {
+                    if(emailPassVal.isValidPass(registerData.getPassword()))
+                    {
+                        databaseConnection.add(registerData.getName(),registerData.getLastname(),registerData.getAge(),registerData.getAddress(),registerData.getEmail(),registerData.getPassword());
 
-                //Przelaczanie na scene glowna
-                root = FXMLLoader.load(getClass().getResource("first.fxml"));
-                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("Zarejestrowano pomyslnie!");
+                        alert.show();
+                        Thread thread = new Thread(() ->
+                        {
+                            try
+                            {
+                                Thread.sleep(2000);
+                                if(alert.isShowing())
+                                {
+                                    Platform.runLater(() -> alert.close());
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        });
+                        thread.setDaemon(true);
+                        thread.start();
 
+                        //Przelaczanie na scene glowna
+                        root = FXMLLoader.load(getClass().getResource("first.fxml"));
+                        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+                    else
+                    {
+                        message.setText("Haslo niepoprawne! Znakow 8 - 20, znak specjalny, cyfra, duza litera");
+                        message.setTextFill(Color.rgb(210, 39, 30));
+                    }
+                }
+                else
+                {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Uzupelnij poprawnie email, ex. example@ex.com");
+                    alert.show();
+                }
             }
             catch (SQLException ex)
             {
@@ -109,6 +152,7 @@ public class RegisterController
             {
                 ex.printStackTrace();
             }
+            //Naprawic sytuacje jesli email jest juz  w bazie, ale jest poprawny
         }
     }
 }
