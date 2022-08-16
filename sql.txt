@@ -1,0 +1,51 @@
+
+---TWORZENIE TABELI DO TRIGGERA---
+
+CREATE TABLE books_audit (
+	bid SERIAL PRIMARY KEY,
+	author TEXT NOT NULL,
+	title TEXT NOT NULL UNIQUE,
+	email TEXT NOT NULL,
+	FOREIGN KEY (email) REFERENCES register (email),
+	bookaddtime varchar(20) NOT NULL 
+);
+
+---TWORZENIE FUNKCJI DO TIGGERA---
+
+CREATE OR REPLACE FUNCTION books_insert_trigger_fnc()
+
+	RETURNS trigger AS
+	
+$$
+
+BEGIN
+
+
+	INSERT INTO "books_audit" ("bid", "author", "title", "email", "bookaddtime")
+	
+		VALUES(NEW."bid", NEW."author", NEW."title", NEW."email", current_date);
+
+RETURN NEW;
+
+END;
+
+$$
+
+LANGUAGE 'plpgsql';
+
+
+
+CREATE TRIGGER books_insert_trigger
+
+	AFTER INSERT
+	
+	ON "books"
+	
+	FOR EACH ROW
+	
+	EXECUTE PROCEDURE books_insert_trigger_fnc();
+
+
+---DROPOWANIE TRIGGERA---
+
+drop trigger books_insert_trigger on "Books" ;
