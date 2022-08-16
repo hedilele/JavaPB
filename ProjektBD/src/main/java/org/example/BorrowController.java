@@ -22,7 +22,7 @@ import static org.example.App.databaseConnection;
 public class BorrowController implements Initializable
 {
     @FXML
-    private TableView<BookData> table;
+    protected TableView<BookData> table;
     @FXML
     private TableColumn<BookData, Integer> bidCol;
     @FXML

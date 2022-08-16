@@ -59,25 +59,25 @@ public class RegisterController
             registerData.setEmail(emailField.getText());
             registerData.setPassword(passwordField.getText());
 
-
-            if(!ageField.getText().trim().isEmpty())
+            //Sprawdzanie czy pole adresowe jest puste,czy nie
+            if(addressField.getText().trim().isEmpty())
             {
-                registerData.setAge(Integer.parseInt(ageField.getText()));
+                registerData.setAddress("brak");
             }
             else
-            {
-                registerData.setAge(0);
-            }
-
-            if(!addressField.getText().trim().isEmpty())
             {
                 registerData.setAddress(addressField.getText());
             }
+
+            //Sprawdzanie czy pole wieku jest puste, czy nie
+            if(ageField.getText().trim().isEmpty())
+            {
+                registerData.setAge(Integer.parseInt(String.valueOf(0)));
+            }
             else
             {
-                registerData.setAddress("Nie podano");
+                registerData.setAge(Integer.parseInt(ageField.getText()));
             }
-
 
             try
             {

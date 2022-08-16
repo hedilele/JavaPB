@@ -25,23 +25,23 @@ public class DatabaseConnection
     //Dodawanie do bazy uzytkownika
     public void add(String name, String lastname, int age, String address, String email, String password) throws ClassNotFoundException, SQLException
     {
-            statement = connection.createStatement();
-            String sql = "INSERT INTO register VALUES ('"+name+"' , '"+lastname+"', "+age+", '"+address+"', '"+email+"', '"+password+"');";
 
-            statement.executeUpdate(sql);
-            statement.close();
+        String sql = "INSERT INTO register(name,lastname,age,address,email,password) values(?,?,?,?,?,?);";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, lastname);
+        ps.setInt(3, age);
+        ps.setString(4,address);
+        ps.setString(5,email);
+        ps.setString(6,password);
+
+        ps.executeUpdate();
+        ps.close();
     }
 
     //Dodawanie do bazy ksiazki
     public void add_book(String author, String title, String genre, String email) throws ClassNotFoundException, SQLException
     {
-        //bid = resultSet.getInt(1);
-        //statement = connection.createStatement();
-        //String sql1 = "SELECT COUNT(*) FROM Books";
-        //JAK ZROBIC DODAWANIE BIDU?
-        //"+bid+",
-        //String sql = "INSERT INTO books VALUES ('"+author+"' , '"+title+"', '"+genre+"', "+number+");";
-
         String sql = "INSERT INTO books(author,title,genre,email) values(?,?,?,?);";
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, author);
@@ -86,8 +86,8 @@ public class DatabaseConnection
         String sql = "CREATE TABLE register " +
                 "(NAME TEXT NOT NULL, " +
                 "LASTNAME TEXT NOT NULL, " +
-                "AGE INT NOT NULL, " +
-                "ADDRESS    CHAR(50), " +
+                "AGE INT , " +
+                "ADDRESS    CHAR(120) , " +
                 "EMAIL TEXT PRIMARY KEY NOT NULL, " +
                 "PASSWORD TEXT NOT NULL)";
         statement.executeUpdate(sql);
@@ -102,7 +102,7 @@ public class DatabaseConnection
         String sql = "CREATE TABLE books " +
                 "(BID SERIAL PRIMARY KEY, " +
                 "AUTHOR TEXT NOT NULL, " +
-                "TITLE TEXT NOT NULL, " +
+                "TITLE TEXT NOT NULL UNIQUE , " +
                 "GENRE TEXT NOT NULL, " +
                 "EMAIL TEXT NOT NULL, " +
                 "FOREIGN KEY (EMAIL) REFERENCES Register(email));"; //Dodanie klucza obcego z tabeli rejestracji
@@ -202,6 +202,39 @@ public class DatabaseConnection
     public boolean weryfikacja_bid(int bid) throws SQLException
     {
         ResultSet resultSet = sprawdz_bid(connection, bid);
+        int wynik = 0;
+
+        while (resultSet.next())
+        {
+            wynik = resultSet.getInt(1);
+        }
+
+        if(wynik == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Sprawdzanie czy ksiazka o takim tytule jest w bazie
+    private ResultSet sprawdz_ksiazke(Connection connection, String title) throws SQLException
+    {
+        String sql = "SELECT COUNT(*) FROM Books WHERE title = ?";
+        ResultSet resultSet = null;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, title);
+
+        resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+
+    public boolean weryfikacja_ksiazki(String title) throws SQLException
+    {
+        ResultSet resultSet = sprawdz_ksiazke(connection, title);
         int wynik = 0;
 
         while (resultSet.next())

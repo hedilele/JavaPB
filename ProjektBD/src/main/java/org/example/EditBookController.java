@@ -52,7 +52,10 @@ public class EditBookController
 
                 Stage stage = (Stage) approveButton.getScene().getWindow();
                 stage.close();
-                //Sprawdzanie czy bid w jest w bazie - mozna dodac zeby lepiej dzialalo
+
+                //Odswiezanie po edycji
+                BorrowController borrowController = new BorrowController();
+                borrowController.table.refresh();
             }
             catch (SQLException ex)
             {

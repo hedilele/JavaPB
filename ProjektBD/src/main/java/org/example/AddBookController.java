@@ -57,10 +57,8 @@ public class AddBookController
 
             try
             {
+                databaseConnection.weryfikacja_ksiazki(bookData.getTitle());
                 databaseConnection.add_book(bookData.getAuthor(),bookData.getTitle(),bookData.getGenre(),Pamiec.pamiec.getEmail());
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Dodano pomyslnie!");
-                alert.show();
 
                 root = FXMLLoader.load(getClass().getResource("mainmenu.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -68,8 +66,17 @@ public class AddBookController
                 stage.setScene(scene);
                 stage.show();
 
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Dodano pomyslnie!");
+                alert.show();
             }
-            catch (SQLException | ClassNotFoundException ex)
+            catch (SQLException ex)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Podany tytul znajduje sie w bazie!");
+                alert.show();
+            }
+            catch (ClassNotFoundException ex)
             {
                 ex.printStackTrace();
             }

@@ -29,14 +29,9 @@ public class App extends Application
     {
         try
         {
-            /*
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.createBase();
-            databaseConnection.bookBase();
-             */
             databaseConnection = new DatabaseConnection();
-
-            //databaseConnection.bookBase();
+            //databaseConnection.createBase(); //Do tworzenia nowych tabel - Tabela do rejestracji
+            //databaseConnection.bookBase(); //Tabela do ksiazek
         }
         catch (SQLException | ClassNotFoundException ex)
         {

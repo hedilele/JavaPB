@@ -71,7 +71,6 @@ public class LoginController
                 stage.setScene(scene);
                 stage.show();
             }
-            //Walidacja kiedy email jest dobry (istnieje), a haslo do podanego istniejacego maila jest zle!
             else
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
