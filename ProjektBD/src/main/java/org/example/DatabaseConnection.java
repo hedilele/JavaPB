@@ -12,13 +12,13 @@ public class DatabaseConnection
     private Statement statement = null;
     private final Connection connection;
 
-    //ObservableList<BookData> observableList = FXCollections.observableArrayList();
     ObservableList<BookData> observableList = FXCollections.observableArrayList();
 
+    //Metoda do laczenia z baza danych
     public DatabaseConnection() throws ClassNotFoundException, SQLException
     {
         Class.forName("org.postgresql.Driver");
-        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","Bakalie37");
+        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/projektBD","postgres","Bakalie37");
         System.out.println("Opened database successfully");
     }
 
@@ -78,7 +78,7 @@ public class DatabaseConnection
         ps.close();
     }
 
-
+    //Ponizsze dwie metody sluza tylko do tworzenia tabeli w bazie - zamiast tworzenia ich recznie caly czas
     //Tworzenie tabeli register do przechowywania danych o osobach
     public void createBase() throws SQLException
     {
@@ -110,6 +110,7 @@ public class DatabaseConnection
         statement.close();
         connection.close();
     }
+
     //Wypisywanie informacji z bazy - pomocnicze
     public void wypiszAll() throws SQLException
     {
@@ -143,6 +144,7 @@ public class DatabaseConnection
         return resultSet;
     }
 
+    //Weryfikacja czy email znajduje sie w bazie i zwracanie informacji o tym
     public boolean weryfikacja(String email, String password) throws SQLException, ClassNotFoundException
     {
 

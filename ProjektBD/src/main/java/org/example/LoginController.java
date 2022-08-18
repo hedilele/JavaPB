@@ -22,6 +22,7 @@ public class LoginController
     @FXML
     private TextField passwordFld, emailFld;
 
+    //Anulowanie logowania
     public void cancel(ActionEvent event) throws IOException
     {
         root = FXMLLoader.load(getClass().getResource("first.fxml"));
@@ -31,6 +32,7 @@ public class LoginController
         stage.show();
     }
 
+    //Metoda odpowiedzialna za zalogowanie
     public void login(ActionEvent event) throws SQLException, ClassNotFoundException, IOException
     {
         DatabaseConnection databaseConnection = new DatabaseConnection();

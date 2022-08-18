@@ -117,4 +117,11 @@ public class BorrowController implements Initializable
         stage2.setScene(scene);
         stage2.show();
     }
+
+    //Przycisk odswiezania tabeli z ksiazkami
+    @FXML
+    public void refresh()
+    {
+        databaseConnection.show_books();
+    }
 }

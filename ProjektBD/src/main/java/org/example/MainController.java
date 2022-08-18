@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//Klasa do zmieniania scen po wybraniu odpowiedniego przycisku
 public class MainController
 {
     private Stage stage;
@@ -45,16 +46,4 @@ public class MainController
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
-
-
-    /*
-    Jesli chcemy zmieniac caly stage,tzn nowe okno:
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage2 = new Stage();
-        stage2.setTitle("Logowanie");
-        stage2.setScene(scene);
-        stage2.show();
-     */
 }

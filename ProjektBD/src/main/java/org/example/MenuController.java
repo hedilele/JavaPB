@@ -30,7 +30,7 @@ public class MenuController
         stage.show();
     }
 
-    //Wypozyczanie ksiazki
+    //Sprawdzanie listy ksiazek
     @FXML
     public void viewbook() throws IOException
     {

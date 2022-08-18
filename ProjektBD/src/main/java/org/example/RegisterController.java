@@ -40,6 +40,7 @@ public class RegisterController
         stage.show();
     }
 
+    //Rejestrowanie sie
     @FXML
     public void submit(ActionEvent event) throws IOException
     {
@@ -83,6 +84,7 @@ public class RegisterController
             {
                 databaseConnection.weryfikacja(registerData.getEmail(),registerData.getPassword());
 
+                //Walidacja danych podanych w formaularzu
                 if(EmailPassVal.isValidEmail(registerData.getEmail()))
                 {
                     if(EmailPassVal.isValidPass(registerData.getPassword()))
@@ -92,6 +94,7 @@ public class RegisterController
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("Zarejestrowano pomyslnie!");
                         alert.show();
+                        //Watek do ukrywania alertu
                         Thread thread = new Thread(() ->
                         {
                             try

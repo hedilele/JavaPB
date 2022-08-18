@@ -52,10 +52,6 @@ public class EditBookController
 
                 Stage stage = (Stage) approveButton.getScene().getWindow();
                 stage.close();
-
-                //Odswiezanie po edycji
-                BorrowController borrowController = new BorrowController();
-                borrowController.table.refresh();
             }
             catch (SQLException ex)
             {

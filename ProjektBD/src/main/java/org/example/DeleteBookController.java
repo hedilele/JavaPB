@@ -33,6 +33,7 @@ public class DeleteBookController
         stage.show();
     }
 
+    //Usuwanie ksiazki o podanym bidzie
     @FXML
     public void delete(ActionEvent event) throws IOException, SQLException
     {

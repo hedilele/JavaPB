@@ -37,6 +37,7 @@ public class AddBookController
         stage.show();
     }
 
+    //Dodanie do bazy uzytkownika
     @FXML
     public void submit(ActionEvent event) throws IOException
     {
